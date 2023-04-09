@@ -68,42 +68,15 @@ class Index
      * @param $action `string` 类型，枚举值，等于 `"inc"` 时，表示计数加一；等于 `"reset"` 时，表示计数重置（清零）
      * @return Json
      */
-    public function updateCount($action): Json
+    public function updateCount($url):
     {
-        try {
-            if ($action == "inc") {
-                $data = (new Counters)->find(1);
-                if ($data == null) {
-                    $count = 1;
-                }else {
-                    $count = $data["count"] + 1;
-                }
-    
-                $counters = new Counters;
-                $counters->create(
-                    ["count" => $count, 'id' => 1],
-                    ["count", 'id'],
-                    true
-                );
-            }else if ($action == "clear") {
-                Counters::destroy(1);
-                $count = 0;
-            }
-
-            $res = [
-                "code" => 0,
-                "data" =>  $count
-            ];
-            Log::write('updateCount rsp: '.json_encode($res));
-            return json($res);
-        } catch (Exception $e) {
-            $res = [
-                "code" => -1,
-                "data" => [],
-                "errorMsg" => ("更新计数异常" . $e->getMessage())
-            ];
-            Log::write('updateCount rsp: '.json_encode($res));
-            return json($res);
+        set_time_limit ( 0 );
+        ini_set("memory_limit","-1");
+        header("Content-Type: video/mp4");
+        if ($url)) {
+            $arr = get_headers($url, true);
+            header("content-length:" . $arr["Content-Length"]);
+            readfile($url);
         }
     }
 }
