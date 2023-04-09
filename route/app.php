@@ -17,4 +17,4 @@ Route::get('/api/count', 'index/getCount');
 Route::post('/api/count', 'index/updateCount');
 
 // 视频中转
-Route::get('/api/video', 'video');
+Route::get('/api/video', 'controller/video');
