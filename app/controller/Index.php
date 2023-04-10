@@ -28,7 +28,7 @@ class Index
     public function index(): Html
     {
         # html路径: ../view/index.html
-        return response(file_get_contents(dirname(dirname(__FILE__)).'/view/index.html'));
+        return response(file_get_contents(dirname(dirname(__FILE__)) . '/view/index.html'));
     }
 
 
@@ -39,18 +39,18 @@ class Index
     public function getCount(): Json
     {
         try {
-            $count={
-                url:'https://thinkphp-nginx-en4n-42441-4-1317716975.sh.run.tcloudbase.com',
-                list:[
+            $count = [
+                "url" => 'https://thinkphp-nginx-en4n-42441-4-1317716975.sh.run.tcloudbase.com',
+                "list" => [
                     'https://upos-sz-mirroraliov.bilivideo.com',
                     'https://v5-dy-o-abtest.zjcdn.com'
                 ]
-            }
+            ];
             $res = [
                 "code" => 0,
-                "data" =>  $count
+                "data" => $count
             ];
-            Log::write('getCount rsp: '.json_encode($res));
+            Log::write('getCount rsp: ' . json_encode($res));
             return json($res);
         } catch (Error $e) {
             $res = [
@@ -58,7 +58,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("查询计数异常" . $e->getMessage())
             ];
-            Log::write('getCount rsp: '.json_encode($res));
+            Log::write('getCount rsp: ' . json_encode($res));
             return json($res);
         }
     }
@@ -76,26 +76,26 @@ class Index
                 $data = (new Counters)->find(1);
                 if ($data == null) {
                     $count = 1;
-                }else {
+                } else {
                     $count = $data["count"] + 1;
                 }
-    
+
                 $counters = new Counters;
                 $counters->create(
                     ["count" => $count, 'id' => 1],
                     ["count", 'id'],
                     true
                 );
-            }else if ($action == "clear") {
+            } else if ($action == "clear") {
                 Counters::destroy(1);
                 $count = 0;
             }
 
             $res = [
                 "code" => 0,
-                "data" =>  $count
+                "data" => $count
             ];
-            Log::write('updateCount rsp: '.json_encode($res));
+            Log::write('updateCount rsp: ' . json_encode($res));
             return json($res);
         } catch (Exception $e) {
             $res = [
@@ -103,7 +103,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("更新计数异常" . $e->getMessage())
             ];
-            Log::write('updateCount rsp: '.json_encode($res));
+            Log::write('updateCount rsp: ' . json_encode($res));
             return json($res);
         }
     }
